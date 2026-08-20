@@ -43,13 +43,13 @@ export default function Navbar({ onCartClick, onLoginClick }) {
         </a>
         <a
           className="py-2 font-display text-sm font-bold uppercase tracking-[.8px] text-[#eee6d9]"
-          href="#locations"
+          href="#home"
         >
           Locations
         </a>
         <a
           className="py-2 font-display text-sm font-bold uppercase tracking-[.8px] text-[#eee6d9]"
-          href="#about"
+          href="#home"
         >
           About us
         </a>
