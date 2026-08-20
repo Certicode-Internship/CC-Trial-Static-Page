@@ -41,10 +41,14 @@ function App() {
 
       <Footer />
       {notice && (
-        <div className="toast" role="status">
+        <div
+          className="fixed right-5.5 bottom-5.5 z-10 max-w-[calc(100vw-44px)] rounded-[3px] bg-cheddar py-4 pr-10.75 pl-4.5 font-bold text-[#21170f] shadow-[0_12px_30px_#0007]"
+          role="status"
+        >
           {notice}
           <button
             aria-label="Close message"
+            className="absolute top-2 right-2.75 border-0 bg-transparent text-2xl"
             type="button"
             onClick={() => setNotice("")}
           >
