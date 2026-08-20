@@ -25,13 +25,7 @@ function App() {
 
       <Hero image={heroImage} />
 
-      <ReserveTable
-        onFindTable={(service) =>
-          showNotice(
-            `${service} table search started — we’ll show the best available seats.`,
-          )
-        }
-      />
+      <ReserveTable />
       <BestSellers
         image={heroImage}
         onOrder={(burger) =>
