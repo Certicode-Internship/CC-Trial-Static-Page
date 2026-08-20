@@ -85,6 +85,10 @@ export default function ReserveTable() {
       if (isClosing) return isClosing;
       closeAnimationRef.current = window.setTimeout(() => {
         setIsConfirmed(false);
+        setPartySize("");
+        setDate("");
+        setTime("");
+        setSeatingZone("");
         setIsConfirmationClosing(false);
       }, 220);
       return true;
@@ -163,7 +167,7 @@ export default function ReserveTable() {
             id="party-size"
             inputMode="numeric"
             name="partySize"
-            placeholder="2 Guests"
+            placeholder="# of Guests"
             type="text"
             value={partySize}
             onChange={(event) => {
@@ -184,6 +188,13 @@ export default function ReserveTable() {
             min={today}
             name="date"
             type="date"
+            style={{
+              WebkitAppearance: "textfield",
+              "&::-webkit-calendar-picker-indicator": {
+                filter: "invert(1)",
+                cursor: "pointer",
+              },
+            }}
             value={date}
             onChange={(event) => {
               setDate(event.target.value);
