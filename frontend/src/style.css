@@ -24,3 +24,57 @@
     cursor: pointer;
   }
 }
+
+@keyframes popup-enter {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes popup-exit {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(10px) scale(0.98); }
+}
+
+@keyframes overlay-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes overlay-exit {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.notice-popup {
+  animation: popup-enter 220ms ease-out both;
+}
+
+.notice-popup--closing {
+  animation: popup-exit 220ms ease-in both;
+}
+
+.reservation-modal {
+  animation: overlay-enter 220ms ease-out both;
+}
+
+.reservation-modal__card {
+  animation: popup-enter 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.reservation-modal--closing {
+  animation: overlay-exit 220ms ease-in both;
+}
+
+.reservation-modal--closing .reservation-modal__card {
+  animation: popup-exit 220ms ease-in both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notice-popup,
+  .notice-popup--closing,
+  .reservation-modal,
+  .reservation-modal__card,
+  .reservation-modal--closing .reservation-modal__card {
+    animation-duration: 1ms;
+  }
+}

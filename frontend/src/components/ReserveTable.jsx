@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const seatingZones = ["2 tables", "4 tables", "main dining", "function hall"];
 
@@ -75,18 +75,33 @@ export default function ReserveTable() {
   const [seatingZone, setSeatingZone] = useState("");
   const [errors, setErrors] = useState({});
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isConfirmationClosing, setIsConfirmationClosing] = useState(false);
   const okButtonRef = useRef(null);
+  const closeAnimationRef = useRef(null);
   const today = getToday();
 
+  const closeConfirmation = useCallback(() => {
+    setIsConfirmationClosing((isClosing) => {
+      if (isClosing) return isClosing;
+      closeAnimationRef.current = window.setTimeout(() => {
+        setIsConfirmed(false);
+        setIsConfirmationClosing(false);
+      }, 220);
+      return true;
+    });
+  }, []);
+
   useEffect(() => {
-    if (!isConfirmed) return undefined;
+    if (!isConfirmed || isConfirmationClosing) return undefined;
     okButtonRef.current?.focus();
     const closeOnEscape = (event) => {
-      if (event.key === "Escape") setIsConfirmed(false);
+      if (event.key === "Escape") closeConfirmation();
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [isConfirmed]);
+  }, [closeConfirmation, isConfirmed, isConfirmationClosing]);
+
+  useEffect(() => () => window.clearTimeout(closeAnimationRef.current), []);
 
   const inputClass = (hasError) =>
     `h-12 w-full rounded-[3px] border bg-[#261a18] px-3 font-display text-base font-semibold text-[#f6eee4] outline-none transition placeholder:text-[#f6eee4]/55 focus:border-cheddar focus:ring-1 focus:ring-cheddar ${hasError ? "border-[#ffd395]" : "border-[#ffd395]/20"}`;
@@ -102,7 +117,10 @@ export default function ReserveTable() {
       seatingZone: seatingZone ? "" : "Select a seating zone.",
     };
     setErrors(nextErrors);
-    if (!Object.values(nextErrors).some(Boolean)) setIsConfirmed(true);
+    if (!Object.values(nextErrors).some(Boolean)) {
+      setIsConfirmationClosing(false);
+      setIsConfirmed(true);
+    }
   };
 
   return (
@@ -241,10 +259,10 @@ export default function ReserveTable() {
         <div
           aria-labelledby="reservation-confirmation-title"
           aria-modal="true"
-          className="fixed inset-0 z-20 flex items-center justify-center bg-black/70 px-5"
+          className={`reservation-modal fixed inset-0 z-20 flex items-center justify-center bg-black/70 px-5 ${isConfirmationClosing ? "reservation-modal--closing" : ""}`}
           role="dialog"
         >
-          <div className="w-full max-w-sm rounded-[7px] border border-[#ffc6744d] bg-[#4b150f] p-7 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+          <div className="reservation-modal__card w-full max-w-sm rounded-[7px] border border-[#ffc6744d] bg-[#4b150f] p-7 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
             <h3
               className="font-display text-3xl font-extrabold uppercase text-[#f6eee4]"
               id="reservation-confirmation-title"
@@ -255,7 +273,7 @@ export default function ReserveTable() {
               ref={okButtonRef}
               className="mt-5 rounded-sm border-0 bg-cheddar px-8 py-2.5 font-display font-extrabold uppercase text-[#181615]"
               type="button"
-              onClick={() => setIsConfirmed(false)}
+              onClick={closeConfirmation}
             >
               OK
             </button>

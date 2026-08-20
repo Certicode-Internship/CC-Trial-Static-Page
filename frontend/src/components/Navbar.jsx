@@ -24,7 +24,11 @@ function Brand() {
   );
 }
 
-export default function Navbar({ onCartClick, onLoginClick }) {
+export default function Navbar({
+  onCartClick,
+  onLoginClick,
+  onComingSoonClick,
+}) {
   return (
     <nav className="relative z-10 mx-auto flex h-22.75 w-[min(1190px,calc(100%-48px))] items-center justify-between gap-6.5 bg-ink max-sm:h-18 max-sm:w-[min(1190px,calc(100%-30px))]">
       <Brand />
@@ -44,12 +48,14 @@ export default function Navbar({ onCartClick, onLoginClick }) {
         <a
           className="py-2 font-display text-sm font-bold uppercase tracking-[.8px] text-[#eee6d9]"
           href="#home"
+          onClick={onComingSoonClick}
         >
           Locations
         </a>
         <a
           className="py-2 font-display text-sm font-bold uppercase tracking-[.8px] text-[#eee6d9]"
           href="#home"
+          onClick={onComingSoonClick}
         >
           About us
         </a>
