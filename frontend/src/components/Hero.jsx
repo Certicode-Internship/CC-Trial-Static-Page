@@ -25,12 +25,6 @@ export default function Hero({ image }) {
           >
             Reserve a table <span>→</span>
           </a>
-          <a
-            className="inline-flex min-h-12.25   items-center justify-center gap-7.5 rounded-[3px] border border-[#f9f1e4]/75 bg-[#090b0ab8] px-4.75 font-display text-base font-extrabold uppercase tracking-[.4px] text-[#f9f1e4] transition hover:-translate-y-0.5"
-            href="#menu"
-          >
-            Order pickup / delivery <span>↗</span>
-          </a>
         </div>
       </div>
       <div className="absolute top-87 left-[14%] z-1 text-right font-display text-lg leading-[.9] font-bold uppercase text-[#f3ead9] drop-shadow-[0_2px_4px_#000] max-md:hidden">
